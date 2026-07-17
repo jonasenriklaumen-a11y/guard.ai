@@ -1,0 +1,7 @@
+# Kern (Pflicht)
+requests>=2.31
+
+# ML-Anomalieerkennung (optional, aber empfohlen).
+# Ohne scikit-learn nutzt guardai einen einfachen statistischen Fallback.
+scikit-learn>=1.3
+numpy>=1.24

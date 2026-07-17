@@ -1,0 +1,32 @@
+# GitHub-Actions-Workflow: laesst guardai bei jedem Push/PR das Repo scannen.
+# Kopiere diese Datei in das zu schuetzende Repo unter .github/workflows/.
+name: guardai security scan
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * *"   # taeglich 06:00 UTC: Definitionen + erneuter Scan
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: guardai installieren
+        run: |
+          python -m pip install --upgrade pip
+          # Aus PyPI, sobald veroeffentlicht - bis dahin direkt aus dem Repo:
+          pip install "guardai[ml] @ git+https://github.com/DEIN-USER/guardai.git"
+
+      - name: Abhaengigkeiten gegen CVEs pruefen
+        run: guardai scan . --fail-on high
+
+      - name: Auf auffaellige Dateien pruefen (ML-Heuristik)
+        run: guardai anomaly . --top 15

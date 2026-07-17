@@ -1,0 +1,11 @@
+[Unit]
+Description=guardai - CVE-Wissensbasis aktualisieren
+Documentation=https://github.com/DEIN-USER/guardai
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+# @GUARDAI@ wird von install.sh durch den venv-Pfad ersetzt.
+ExecStart=@GUARDAI@ update
+Nice=10

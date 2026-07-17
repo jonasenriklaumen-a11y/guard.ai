@@ -1,0 +1,11 @@
+[Unit]
+Description=guardai - taegliche CVE-Aktualisierung
+
+[Timer]
+# Taeglich, mit Nachholen verpasster Laeufe (z.B. wenn der Rechner aus war).
+OnCalendar=daily
+Persistent=true
+RandomizedDelaySec=15m
+
+[Install]
+WantedBy=timers.target
