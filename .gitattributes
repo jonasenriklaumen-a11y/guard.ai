@@ -1,0 +1,6 @@
+# Shell-Skripte und systemd-Units muessen unter Linux LF behalten,
+# sonst schlaegt die Ausfuehrung fehl (bash\r / systemd parse error).
+*.sh          text eol=lf
+install.sh    text eol=lf
+*.service     text eol=lf
+*.timer       text eol=lf
