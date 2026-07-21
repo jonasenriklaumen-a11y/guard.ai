@@ -23,7 +23,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           # Aus PyPI, sobald veroeffentlicht - bis dahin direkt aus dem Repo:
-          pip install "guardai[ml] @ git+https://github.com/DEIN-USER/guardai.git"
+          pip install "guardai[ml] @ git+https://github.com/jonasenriklaumen-a11y/guard.ai.git"
 
       - name: Abhaengigkeiten gegen CVEs pruefen
         run: guardai scan . --fail-on high
