@@ -6,21 +6,6 @@ Defensiver Schwachstellen- und Anomalie-Scanner. Zieht seine Informationen aus
 aktualisiert seine Definitionen automatisch und markiert mit einem ML-Modell
 auffällige Dateien. Läuft lokal oder als GitHub-Action.
 
-## Ehrlicher Hinweis zu „Zero-Days"
-
-Ein echter Zero-Day steht per Definition in **keiner** Datenbank – kein Tool
-lädt dafür fertige Signaturen. `guardai` macht stattdessen das, was real
-funktioniert:
-
-1. **Bekannte Schwachstellen (n-days)** aus NVD/OSV sofort nach Veröffentlichung
-   gegen deine Abhängigkeiten prüfen.
-2. **Unbekannte Auffälligkeiten** per unüberwachtem ML-Modell (Isolation Forest)
-   erkennen – z. B. eingeschleuste, verschleierte oder minifizierte Payloads,
-   die von der Norm des Projekts abweichen.
-
-Das ersetzt kein Endpoint-AV mit Kernel-Zugriff, ist aber ein sinnvoller,
-ehrlicher Schutz auf Repo-/Supply-Chain-Ebene.
-
 ## Installation
 
 ```bash
