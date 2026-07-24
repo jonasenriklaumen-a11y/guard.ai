@@ -24,7 +24,7 @@ def _parse_requirements(path: Path) -> list[tuple[str, str, str | None]]:
             out.append(("PyPI", m.group(1), m.group(2)))
         else:
             # Paket ohne feste Version - trotzdem melden (Version unbekannt).
-            name = re.split(r"[<>=!~\s\[]", line, 1)[0].strip()
+            name = re.split(r"[<>=!~\s\[]", line, maxsplit=1)[0].strip()
             if name:
                 out.append(("PyPI", name, None))
     return out

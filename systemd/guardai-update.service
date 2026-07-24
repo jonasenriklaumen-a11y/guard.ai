@@ -1,6 +1,6 @@
 [Unit]
 Description=guardai - CVE-Wissensbasis aktualisieren
-Documentation=https://github.com/DEIN-USER/guardai
+Documentation=https://github.com/jonasenriklaumen-a11y/guard.ai
 After=network-online.target
 Wants=network-online.target
 

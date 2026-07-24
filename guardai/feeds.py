@@ -84,9 +84,12 @@ def query_osv(package: str, version: str | None, ecosystem: str) -> list[dict]:
     vulns = resp.json().get("vulns", [])
     out = []
     for v in vulns:
-        sev = None
-        for s in v.get("severity", []):
-            sev = s.get("score")  # CVSS-Vektor als String
+        # Label (LOW/MODERATE/HIGH/CRITICAL) bevorzugen - der CVSS-Vektor-String
+        # aus v["severity"] enthaelt keine Stufe und waere fuer --fail-on nutzlos.
+        sev = (v.get("database_specific") or {}).get("severity")
+        if not sev:
+            for s in v.get("severity", []):
+                sev = s.get("score")  # CVSS-Vektor als String (Fallback)
         out.append(
             {
                 "id": v.get("id"),

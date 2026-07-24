@@ -74,11 +74,13 @@ def upsert_cves(rows: Iterable[dict]) -> int:
 
 def search(keyword: str, limit: int = 25) -> list[sqlite3.Row]:
     """Volltextsuche in den CVE-Zusammenfassungen."""
+    # Als Phrase quoten: Zeichen wie '-' oder '.' sind sonst FTS5-Syntaxfehler.
+    query = '"' + keyword.replace('"', '""') + '"'
     with connect() as conn:
         return conn.execute(
             """SELECT c.* FROM cves_fts f JOIN cves c ON c.id = f.id
                WHERE cves_fts MATCH ? ORDER BY c.cvss DESC LIMIT ?""",
-            (keyword, limit),
+            (query, limit),
         ).fetchall()
 
 

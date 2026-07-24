@@ -9,7 +9,8 @@ from pathlib import Path
 from . import __version__, anomaly, database, scanner, updater
 
 # Severity-Rang fuer Exit-Code-Entscheidung / Sortierung.
-_SEV_RANK = {"CRITICAL": 4, "HIGH": 3, "MEDIUM": 2, "LOW": 1, None: 0}
+# MODERATE: so nennen OSV/GHSA-Advisories die Stufe MEDIUM.
+_SEV_RANK = {"CRITICAL": 4, "HIGH": 3, "MEDIUM": 2, "MODERATE": 2, "LOW": 1, None: 0}
 
 
 def _sev_rank(sev: str | None) -> int:
@@ -19,6 +20,10 @@ def _sev_rank(sev: str | None) -> int:
     for name, rank in _SEV_RANK.items():
         if name and name in up:
             return rank
+    # CVSS-Vektor-String (z.B. "CVSS:3.1/AV:N/..."): keine Stufe ablesbar,
+    # aber ein Fund mit Vektor ist ernst zu nehmen -> konservativ als HIGH werten.
+    if up.startswith("CVSS:"):
+        return _SEV_RANK["HIGH"]
     return 0
 
 
